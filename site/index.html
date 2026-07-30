@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>僑外生工讀生｜實習工作規劃（2個月）</title>
+<style>
+  :root{
+    --navy:#1e2a4a; --navy-deep:#141c33; --coral:#ff6b5b; --gold:#ffb648;
+    --teal:#2bb3a3; --bg:#f6f7fb; --card:#ffffff; --line:#e7e9f2;
+    --text:#2b2f3d; --muted:#7a7f92; --green:#3aa76d;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px 60px;}
+  header{background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 55%,#2c3a63 100%);color:#fff;padding:56px 24px 64px;position:relative;overflow:hidden;}
+  header::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(255,107,91,.35),transparent 70%);border-radius:50%;}
+  header::before{content:"";position:absolute;left:-60px;bottom:-100px;width:260px;height:260px;background:radial-gradient(circle,rgba(43,179,163,.3),transparent 70%);border-radius:50%;}
+  .header-inner{max-width:1180px;margin:0 auto;position:relative;z-index:1;}
+  .eyebrow{display:inline-block;font-size:13px;letter-spacing:2px;background:rgba(255,255,255,.12);padding:6px 14px;border-radius:999px;margin-bottom:16px;color:#ffd9ce;}
+  h1{font-size:32px;margin:0 0 12px;font-weight:700;}
+  .subtitle{font-size:15.5px;color:#c7cde3;max-width:680px;}
+  .meta-row{display:flex;gap:28px;margin-top:28px;flex-wrap:wrap;align-items:center;}
+  .meta-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 18px;min-width:150px;}
+  .meta-item .label{font-size:12px;color:#a9b0cc;margin-bottom:4px;}
+  .meta-item .value{font-size:16px;font-weight:600;}
+  .overall-progress{flex:1;min-width:220px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 18px;}
+  .overall-progress .label{font-size:12px;color:#a9b0cc;margin-bottom:8px;display:flex;justify-content:space-between;}
+  .overall-progress .bar-track{height:8px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden;}
+  .overall-progress .bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--green));width:0%;transition:width .3s ease;}
+  .lang-switch{position:absolute;top:24px;right:24px;z-index:2;display:flex;gap:2px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px;}
+  .lang-btn{border:none;background:transparent;color:#c7cde3;font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s;font-family:inherit;}
+  .lang-btn:hover:not(.active){background:rgba(255,255,255,.14);}
+  .lang-btn.active{background:#fff;color:var(--navy);}
+  section{margin-top:48px;}
+  .section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;}
+  .section-head .num{font-size:13px;font-weight:700;color:#fff;background:var(--coral);width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+  .section-head h2{font-size:20px;margin:0;}
+  .section-desc{color:var(--muted);font-size:13.5px;margin:-8px 0 20px 38px;}
+  .topic-block{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:14px;overflow:hidden;}
+  .topic-block .topic-head{padding:18px 22px;display:flex;align-items:center;gap:14px;background:#fbfbfe;}
+  .topic-block .idx{font-size:13px;font-weight:800;color:#fff;width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .topic-block .titles{flex:1;min-width:0;}
+  .topic-block .titles h3{margin:0;font-size:15.5px;}
+  .topic-block .titles p{margin:2px 0 0;font-size:12.5px;color:var(--muted);font-weight:400;}
+  .topic-block .count{font-size:12px;font-weight:700;color:var(--muted);background:#eef0f5;padding:3px 10px;border-radius:999px;white-space:nowrap;}
+  .topic-block .count.done{background:#e3f5ea;color:var(--green);}
+  .topic-block .mini-bar{width:60px;height:6px;border-radius:99px;background:#eef0f5;overflow:hidden;flex-shrink:0;}
+  .topic-block .mini-bar-fill{height:100%;background:var(--green);width:0%;transition:width .25s ease;}
+  .topic-body{padding:16px 22px 22px 64px;}
+  .standalone-check{display:flex;align-items:center;gap:8px;flex-shrink:0;cursor:pointer;}
+  .standalone-check .check-label{font-size:12.5px;font-weight:600;color:var(--muted);}
+  .standalone-check input:checked ~ .check-label{color:var(--green);}
+  .instruction-text{font-size:13px;color:var(--muted);margin:0 0 12px;}
+  input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:19px;height:19px;border:2px solid #cfd3e2;border-radius:6px;flex-shrink:0;margin-top:1px;position:relative;cursor:pointer;transition:border-color .15s,background .15s;}
+  input[type="checkbox"]:checked{background:var(--green);border-color:var(--green);}
+  input[type="checkbox"]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+  .task-list{list-style:none;margin:0;padding:0;}
+  .task-item{border-bottom:1px dashed var(--line);}
+  .task-item:last-child{border-bottom:none;}
+  .task-item label{display:flex;align-items:flex-start;gap:10px;padding:10px 2px;cursor:pointer;}
+  .task-text{font-size:13.5px;}
+  .task-item.checked .task-text{color:var(--muted);text-decoration:line-through;text-decoration-color:#c9cddb;}
+  .field-item{margin-bottom:16px;}
+  .field-item:last-child{margin-bottom:0;}
+  .field-label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text);}
+  .field-input,.field-textarea{width:100%;border:1px solid #d7dae5;border-radius:10px;padding:10px 12px;font-size:13.5px;font-family:inherit;color:var(--text);background:#fbfbfe;transition:border-color .15s,background .15s;}
+  .field-input:focus,.field-textarea:focus{outline:none;border-color:var(--teal);background:#fff;}
+  .field-textarea{resize:vertical;min-height:80px;}
+  .field-item.filled .field-input,.field-item.filled .field-textarea{border-color:var(--green);background:#f4faf6;}
+  .field-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+  .field-row:last-child{margin-bottom:0;}
+  .field-row .field-num{flex-shrink:0;width:24px;height:36px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--muted);}
+  .field-row .field-item{flex:1;margin-bottom:0;}
+  .reel-card{padding-bottom:16px;margin-bottom:16px;border-bottom:1px dashed var(--line);}
+  .reel-card:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .reel-badge{display:inline-flex;background:#eef0f5;color:var(--navy);padding:3px 10px;border-radius:999px;font-size:12px;margin-bottom:10px;}
+  .pair-fields{display:flex;flex-direction:column;gap:10px;}
+  .field-row-2col{display:flex;gap:10px;}
+  .field-row-2col .field-item{flex:1;margin-bottom:0;}
+  .status-banner{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;font-size:13.5px;color:var(--muted);}
+  .status-banner.error{border-color:#f3b9b0;background:#fff6f5;color:#b3493a;}
+  .user-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 14px;font-size:12.5px;margin-top:18px;}
+  .user-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);}
+  .saving-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-left:6px;opacity:0;transition:opacity .15s;}
+  .saving-dot.show{opacity:1;}
+  footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;}
+  @media (max-width:640px){
+    h1{font-size:24px;}
+    .section-desc{margin-left:0;}
+    .topic-body{padding-left:22px;}
+    .topic-block .mini-bar{display:none;}
+    .lang-switch{position:static;display:inline-flex;margin-bottom:16px;}
+    .field-row-2col{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="lang-switch">
+    <button type="button" class="lang-btn" data-lang="zh">中文</button>
+    <button type="button" class="lang-btn" data-lang="en">EN</button>
+    <button type="button" class="lang-btn" data-lang="vi">VI</button>
+  </div>
+  <div class="header-inner">
+    <span class="eyebrow" data-i18n="eyebrow">INTERN WORK PLAN</span>
+    <h1 data-i18n="h1">僑外生工讀生｜實習工作規劃</h1>
+    <p class="subtitle" data-i18n="subtitle">為期 2 個月的實習工作藍圖，資料即時同步到 Notion，主管可隨時查看進度。</p>
+    <div class="meta-row">
+      <div class="meta-item"><div class="label" data-i18n="meta-duration-label">期間</div><div class="value" data-i18n="meta-duration-value">共 2 個月</div></div>
+      <div class="overall-progress">
+        <div class="label"><span data-i18n="overall-label">整體完成進度</span><span id="overall-text">0 / 0</span></div>
+        <div class="bar-track"><div class="bar-fill" id="overall-fill"></div></div>
+      </div>
+    </div>
+    <div class="user-badge"><span class="dot"></span><span data-i18n="viewing-label">檢視對象</span>：<strong id="user-code-label">-</strong><span class="saving-dot" id="saving-dot"></span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="status-area"></div>
+  <div id="app" style="display:none;"></div>
+
+  <footer data-i18n="footer-text">
+    僑外生工讀生實習工作規劃（2個月）。資料即時儲存於 Notion，可隨時關閉頁面，下次用同一個連結打開會保留進度。
+  </footer>
+</div>
+
+<script>
+(function(){
+  // ============ CONFIGURE THIS AFTER DEPLOYING THE WORKER ============
+  var API_BASE = "https://intern-progress-proxy.YOUR_SUBDOMAIN.workers.dev";
+  // =====================================================================
+
+  var params = new URLSearchParams(window.location.search);
+  var USER = params.get('user');
+
+  var CATEGORY_ORDER = ["事前準備","網站流程測試","常見問題收集","求職問卷規劃","社群整理","Reels腳本規劃","實習心得"];
+
+  var I18N = {
+    zh: {
+      "eyebrow":"INTERN WORK PLAN",
+      "h1":"僑外生工讀生｜實習工作規劃",
+      "subtitle":"為期 2 個月的實習工作藍圖，資料即時同步到 Notion，主管可隨時查看進度。",
+      "meta-duration-label":"期間","meta-duration-value":"共 2 個月",
+      "overall-label":"整體完成進度","viewing-label":"檢視對象",
+      "no-user":"這個連結缺少使用者代碼。請使用主管提供、包含 ?user=你的代碼 的專屬連結。",
+      "load-error":"無法連線到後端，請確認網路連線，或稍後再試一次。",
+      "loading":"載入中...",
+      "cat-事前準備":"事前準備","cat-網站流程測試":"網站流程測試","cat-常見問題收集":"收集僑外生在台常見問題",
+      "cat-求職問卷規劃":"僑外生求職問卷規劃","cat-社群整理":"僑外生常用社團／社群整理",
+      "cat-Reels腳本規劃":"Reels 拍攝腳本規劃","cat-實習心得":"實習心得回饋",
+      "desc-事前準備":"帳號申請、設備與教育訓練",
+      "desc-網站流程測試":"僑外生求職為主，同步進行網站翻譯查錯",
+      "desc-常見問題收集":"簽證、履歷、面試、文化差異等，作為問卷與內容素材基礎",
+      "desc-求職問卷規劃":"設計問卷架構與題目（含求職痛點、常見問題交叉驗證題）",
+      "desc-社群整理":"蒐集 FB 社團、Line 群、Discord 等相關社群",
+      "desc-Reels腳本規劃":"發想 5 支以上主題與呈現形式，可搞笑或常被誤會的事情",
+      "desc-實習心得":"最後完成心得撰寫",
+      "check-done":"完成",
+      "faq-item-label":"常見問題",
+      "faq-ph":"輸入常見問題...",
+      "survey-instruction":"請使用 Survey Cake 設計問卷（含求職痛點、常見問題交叉驗證題），完成後將問卷連結貼在下方。",
+      "survey-link-label":"問卷連結",
+      "community-instruction":"蒐集 FB 社團、Line 群、Discord 等僑外生相關社群。",
+      "community-list-label":"社群清單",
+      "community-ph":"請列出社群名稱與連結...",
+      "reel-label":"Reel",
+      "field-video-name":"影片名稱","field-ref-link":"參考連結","field-script-content":"腳本內容",
+      "reels-title-ph":"輸入影片名稱...","reels-script-ph":"簡述分鏡與台詞...",
+      "ig-label":"實習結束在個人 IG po 心得文（貼上貼文連結）",
+      "feedback-label":"心得回饋","feedback-ph":"分享這兩個月的實習心得、收穫與建議……",
+      "footer-text":"僑外生工讀生實習工作規劃（2個月）。資料即時儲存於 Notion，可隨時關閉頁面，下次用同一個連結打開會保留進度。"
+    },
+    en: {
+      "eyebrow":"INTERN WORK PLAN",
+      "h1":"Overseas & Foreign Student Intern | Internship Work Plan",
+      "subtitle":"A 2-month internship work blueprint. Data syncs live to Notion, so your manager can check progress anytime.",
+      "meta-duration-label":"Duration","meta-duration-value":"2 months total",
+      "overall-label":"Overall progress","viewing-label":"Viewing",
+      "no-user":"This link is missing a user code. Please use the personal link your manager gave you (it contains ?user=yourcode).",
+      "load-error":"Couldn't connect to the backend. Check your connection or try again shortly.",
+      "loading":"Loading...",
+      "cat-事前準備":"Pre-Departure Preparation","cat-網站流程測試":"Website Flow Testing","cat-常見問題收集":"Common Job-Search Questions",
+      "cat-求職問卷規劃":"Job-Hunting Survey Planning","cat-社群整理":"Community Roundup",
+      "cat-Reels腳本規劃":"Reels Script Planning","cat-實習心得":"Internship Reflection Feedback",
+      "desc-事前準備":"Account registration, equipment, and onboarding training",
+      "desc-網站流程測試":"Focused on job-seeking flows for overseas students, plus a translation quality check",
+      "desc-常見問題收集":"Visas, resumes, interviews, cultural differences, etc.",
+      "desc-求職問卷規劃":"Design the survey structure and questions",
+      "desc-社群整理":"Collect relevant FB groups, Line groups, Discord servers, etc.",
+      "desc-Reels腳本規劃":"Brainstorm 5+ themes and formats — funny or commonly misunderstood things welcome",
+      "desc-實習心得":"Final reflection write-up",
+      "check-done":"Done",
+      "faq-item-label":"Question",
+      "faq-ph":"Enter a common question...",
+      "survey-instruction":"Use Survey Cake to design the survey, then paste the survey link below.",
+      "survey-link-label":"Survey link",
+      "community-instruction":"Collect FB groups, Line groups, Discord servers, and other overseas-student communities.",
+      "community-list-label":"Community list",
+      "community-ph":"List community names and links...",
+      "reel-label":"Reel",
+      "field-video-name":"Video name","field-ref-link":"Reference link","field-script-content":"Script content",
+      "reels-title-ph":"Enter video name...","reels-script-ph":"Briefly describe the storyboard and dialogue...",
+      "ig-label":"Post your reflection on your personal IG at the end of the internship (paste the post link)",
+      "feedback-label":"Reflection feedback","feedback-ph":"Share your reflections, takeaways, and suggestions...",
+      "footer-text":"Overseas & Foreign Student Intern Work Plan (2 months). Data is saved live to Notion — reopen with the same link anytime to see your progress."
+    },
+    vi: {
+      "eyebrow":"KẾ HOẠCH THỰC TẬP",
+      "h1":"Thực Tập Sinh Du Học Sinh／Sinh Viên Nước Ngoài | Kế Hoạch Công Việc",
+      "subtitle":"Kế hoạch công việc thực tập 2 tháng. Dữ liệu đồng bộ trực tiếp với Notion để quản lý có thể xem tiến độ bất cứ lúc nào.",
+      "meta-duration-label":"Thời gian","meta-duration-value":"Tổng cộng 2 tháng",
+      "overall-label":"Tiến độ tổng thể","viewing-label":"Đang xem",
+      "no-user":"Đường link này thiếu mã người dùng. Vui lòng dùng đường link cá nhân mà quản lý cung cấp (có chứa ?user=mã của bạn).",
+      "load-error":"Không thể kết nối với máy chủ. Vui lòng kiểm tra kết nối mạng hoặc thử lại sau.",
+      "loading":"Đang tải...",
+      "cat-事前準備":"Chuẩn Bị Trước Khi Bắt Đầu","cat-網站流程測試":"Kiểm Tra Luồng Trải Nghiệm Website","cat-常見問題收集":"Câu Hỏi Thường Gặp",
+      "cat-求職問卷規劃":"Lên Kế Hoạch Khảo Sát Tìm Việc","cat-社群整理":"Tổng Hợp Cộng Đồng",
+      "cat-Reels腳本規劃":"Lên Kế Hoạch Kịch Bản Reels","cat-實習心得":"Phản Hồi Cảm Nghĩ Thực Tập",
+      "desc-事前準備":"Đăng ký tài khoản, thiết bị và đào tạo hội nhập",
+      "desc-網站流程測試":"Tập trung vào luồng tìm việc của du học sinh, đồng thời rà soát bản dịch",
+      "desc-常見問題收集":"Visa, sơ yếu lý lịch, phỏng vấn, khác biệt văn hóa, v.v.",
+      "desc-求職問卷規劃":"Thiết kế cấu trúc và câu hỏi khảo sát",
+      "desc-社群整理":"Thu thập các hội nhóm Facebook, nhóm Line, Discord, v.v.",
+      "desc-Reels腳本規劃":"Nghĩ ra từ 5 chủ đề trở lên — hài hước hoặc thường bị hiểu lầm đều được",
+      "desc-實習心得":"Viết cảm nghĩ cuối cùng",
+      "check-done":"Hoàn thành",
+      "faq-item-label":"Câu hỏi",
+      "faq-ph":"Nhập câu hỏi thường gặp...",
+      "survey-instruction":"Vui lòng sử dụng Survey Cake để thiết kế khảo sát, sau đó dán đường link khảo sát bên dưới.",
+      "survey-link-label":"Đường link khảo sát",
+      "community-instruction":"Thu thập các hội nhóm Facebook, nhóm Line, Discord và các cộng đồng khác.",
+      "community-list-label":"Danh sách cộng đồng",
+      "community-ph":"Liệt kê tên và đường link cộng đồng...",
+      "reel-label":"Reel",
+      "field-video-name":"Tên video","field-ref-link":"Đường link tham khảo","field-script-content":"Nội dung kịch bản",
+      "reels-title-ph":"Nhập tên video...","reels-script-ph":"Mô tả ngắn gọn phân cảnh và lời thoại...",
+      "ig-label":"Đăng bài cảm nghĩ lên Instagram cá nhân khi kết thúc thực tập (dán link bài đăng)",
+      "feedback-label":"Phản hồi cảm nghĩ","feedback-ph":"Chia sẻ cảm nghĩ, những gì bạn học được và đề xuất...",
+      "footer-text":"Kế hoạch công việc thực tập (2 tháng). Dữ liệu được lưu trực tiếp trên Notion — mở lại bằng cùng đường link để xem tiến độ."
+    }
+  };
+
+  var LANG_KEY = 'intern-plan-lang';
+  var currentLang = 'zh';
+  try { currentLang = localStorage.getItem(LANG_KEY) || 'zh'; } catch(e){}
+  if (!I18N[currentLang]) currentLang = 'zh';
+
+  var items = [];          // flat list from API
+  var saveTimers = {};      // debounce per-field timers
+
+  function t(key){ return (I18N[currentLang] && I18N[currentLang][key] !== undefined) ? I18N[currentLang][key] : key; }
+
+  function setStatus(html, isError){
+    var el = document.getElementById('status-area');
+    el.innerHTML = html ? ('<div class="status-banner' + (isError ? ' error' : '') + '">' + html + '</div>') : '';
+  }
+
+  function showSaving(on){
+    var d = document.getElementById('saving-dot');
+    if (d) d.classList.toggle('show', !!on);
+  }
+
+  function applyStaticLang(){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      el.textContent = t(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
+    });
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      currentLang = btn.getAttribute('data-lang');
+      try { localStorage.setItem(LANG_KEY, currentLang); } catch(e){}
+      applyStaticLang();
+      render();
+    });
+  });
+
+  applyStaticLang();
+
+  if (!USER) {
+    setStatus(t('no-user'), true);
+    return;
+  }
+  document.getElementById('user-code-label').textContent = USER;
+
+  function apiGet(){
+    return fetch(API_BASE + '/items?user=' + encodeURIComponent(USER)).then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    });
+  }
+
+  function apiUpdate(id, field, value){
+    showSaving(true);
+    return fetch(API_BASE + '/items/' + encodeURIComponent(id), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ field: field, value: value })
+    }).then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).finally(function(){
+      setTimeout(function(){ showSaving(false); }, 400);
+    });
+  }
+
+  function debouncedSave(id, field, value){
+    var key = id + ':' + field;
+    if (saveTimers[key]) clearTimeout(saveTimers[key]);
+    saveTimers[key] = setTimeout(function(){
+      apiUpdate(id, field, value).catch(function(e){ console.error(e); });
+    }, 600);
+  }
+
+  // ---- completion units per item (for progress bars) ----
+  function unitsFor(item){
+    switch(item.category){
+      case '事前準備':
+      case '網站流程測試':
+        return [!!item.done];
+      case '常見問題收集':
+        return [!!(item.text && item.text.trim())];
+      case '求職問卷規劃':
+        return [!!(item.link && item.link.trim())];
+      case '社群整理':
+        return [!!(item.text && item.text.trim())];
+      case 'Reels腳本規劃':
+        return [!!(item.text && item.text.trim()), !!(item.link && item.link.trim()), !!(item.script && item.script.trim())];
+      case '實習心得':
+        if (item.title.indexOf('IG') !== -1) return [!!(item.link && item.link.trim())];
+        return [!!(item.text && item.text.trim())];
+      default:
+        return [];
+    }
+  }
+
+  function groupProgress(list){
+    var total = 0, done = 0;
+    list.forEach(function(item){ unitsFor(item).forEach(function(u){ total++; if (u) done++; }); });
+    return { total: total, done: done };
+  }
+
+  function updateOverall(){
+    var p = groupProgress(items);
+    document.getElementById('overall-text').textContent = p.done + ' / ' + p.total;
+    document.getElementById('overall-fill').style.width = (p.total ? (p.done/p.total*100) : 0) + '%';
+  }
+
+  function el(tag, attrs, children){
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function(k){
+      if (k === 'class') e.className = attrs[k];
+      else if (k === 'html') e.innerHTML = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function(c){ if (c) e.appendChild(c); });
+    return e;
+  }
+
+  function textNode(s){ return document.createTextNode(s); }
+
+  function renderTopicHeader(idx, color, catKey, count){
+    var head = el('div', {class:'topic-head'});
+    head.appendChild(el('span', {class:'idx', style:'background:' + color}, [textNode(idx)]));
+    var titles = el('div', {class:'titles'});
+    titles.appendChild(el('h3', {}, [textNode(t('cat-' + catKey))]));
+    titles.appendChild(el('p', {}, [textNode(t('desc-' + catKey))]));
+    head.appendChild(titles);
+    var bar = el('span', {class:'mini-bar'}, [el('span', {class:'mini-bar-fill', id:'bar-' + catKey})]);
+    head.appendChild(bar);
+    head.appendChild(el('span', {class:'count', id:'count-' + catKey}, [textNode(count)]));
+    return head;
+  }
+
+  function refreshTopicBadge(catKey){
+    var list = items.filter(function(i){ return i.category === catKey; });
+    var p = groupProgress(list);
+    var countEl = document.getElementById('count-' + catKey);
+    var fillEl = document.getElementById('bar-' + catKey);
+    if (countEl) {
+      countEl.textContent = p.done + '/' + p.total;
+      countEl.classList.toggle('done', p.total > 0 && p.done === p.total);
+    }
+    if (fillEl) fillEl.style.width = (p.total ? (p.done/p.total*100) : 0) + '%';
+  }
+
+  function makeCheckboxRow(item){
+    var li = el('li', {class:'task-item' + (item.done ? ' checked' : '')});
+    var label = el('label');
+    var cb = el('input', {type:'checkbox'});
+    cb.checked = item.done;
+    cb.addEventListener('change', function(){
+      item.done = cb.checked;
+      li.classList.toggle('checked', cb.checked);
+      apiUpdate(item.id, 'done', cb.checked).catch(function(e){ console.error(e); });
+      refreshTopicBadge(item.category);
+      updateOverall();
+    });
+    label.appendChild(cb);
+    label.appendChild(el('span', {class:'task-text'}, [textNode(item.title)]));
+    li.appendChild(label);
+    return li;
+  }
+
+  function makeTextField(item, labelText, placeholder, isTextarea, isUrl, valueField){
+    var wrap = el('div', {class:'field-item' + (item[valueField] && item[valueField].trim() ? ' filled' : '')});
+    if (labelText) wrap.appendChild(el('label', {class:'field-label'}, [textNode(labelText)]));
+    var input = isTextarea ? el('textarea', {class:'field-textarea', rows:'4', placeholder: placeholder || ''})
+                            : el('input', {type: isUrl ? 'url' : 'text', class:'field-input', placeholder: placeholder || ''});
+    input.value = item[valueField] || '';
+    input.addEventListener('input', function(){
+      item[valueField] = input.value;
+      wrap.classList.toggle('filled', !!input.value.trim());
+      debouncedSave(item.id, valueField, input.value);
+      refreshTopicBadge(item.category);
+      updateOverall();
+    });
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  function render(){
+    var app = document.getElementById('app');
+    app.innerHTML = '';
+
+    var byCat = {};
+    items.forEach(function(i){ (byCat[i.category] = byCat[i.category] || []).push(i); });
+    Object.keys(byCat).forEach(function(k){ byCat[k].sort(function(a,b){ return a.order - b.order; }); });
+
+    var colors = {
+      "事前準備":"#64748b","網站流程測試":"var(--teal)","常見問題收集":"#5b7cff",
+      "求職問卷規劃":"var(--coral)","社群整理":"#9b6bff","Reels腳本規劃":"#ff8a5c","實習心得":"var(--navy)"
+    };
+    var idxLabels = {
+      "事前準備":"A","網站流程測試":"01","常見問題收集":"02","求職問卷規劃":"03",
+      "社群整理":"04","Reels腳本規劃":"05","實習心得":"B"
+    };
+
+    CATEGORY_ORDER.forEach(function(cat){
+      var list = byCat[cat] || [];
+      if (!list.length) return;
+      var p = groupProgress(list);
+
+      if (cat === '網站流程測試') {
+        // simple single row with just a checkbox, no expandable body
+        var block = el('div', {class:'topic-block'});
+        var row = el('div', {class:'topic-head'});
+        row.appendChild(el('span', {class:'idx', style:'background:' + colors[cat]}, [textNode(idxLabels[cat])]));
+        var titles = el('div', {class:'titles'});
+        titles.appendChild(el('h3', {}, [textNode(t('cat-' + cat))]));
+        titles.appendChild(el('p', {}, [textNode(t('desc-' + cat))]));
+        row.appendChild(titles);
+        var item = list[0];
+        var check = el('label', {class:'standalone-check'});
+        var cb = el('input', {type:'checkbox'});
+        cb.checked = item.done;
+        cb.addEventListener('change', function(){
+          item.done = cb.checked;
+          check.querySelector('.check-label').classList.toggle('active', cb.checked);
+          apiUpdate(item.id, 'done', cb.checked).catch(function(e){ console.error(e); });
+          updateOverall();
+        });
+        check.appendChild(cb);
+        check.appendChild(el('span', {class:'check-label'}, [textNode(t('check-done'))]));
+        row.appendChild(check);
+        block.appendChild(row);
+        app.appendChild(block);
+        return;
+      }
+
+      var block = el('div', {class:'topic-block'});
+      block.appendChild(renderTopicHeader(idxLabels[cat], colors[cat], cat, p.done + '/' + p.total));
+      var body = el('div', {class:'topic-body'});
+
+      if (cat === '事前準備') {
+        var ul = el('ul', {class:'task-list'});
+        list.forEach(function(item){ ul.appendChild(makeCheckboxRow(item)); });
+        body.appendChild(ul);
+      } else if (cat === '常見問題收集') {
+        list.forEach(function(item){
+          var row = el('div', {class:'field-row'});
+          row.appendChild(el('span', {class:'field-num'}, [textNode(String(item.order))]));
+          row.appendChild(makeTextField(item, null, t('faq-ph'), false, false, 'text'));
+          body.appendChild(row);
+        });
+      } else if (cat === '求職問卷規劃') {
+        body.appendChild(el('p', {class:'instruction-text'}, [textNode(t('survey-instruction'))]));
+        body.appendChild(makeTextField(list[0], t('survey-link-label'), 'https://www.surveycake.com/s/...', false, true, 'link'));
+      } else if (cat === '社群整理') {
+        body.appendChild(el('p', {class:'instruction-text'}, [textNode(t('community-instruction'))]));
+        body.appendChild(makeTextField(list[0], t('community-list-label'), t('community-ph'), true, false, 'text'));
+      } else if (cat === 'Reels腳本規劃') {
+        list.forEach(function(item){
+          var card = el('div', {class:'reel-card'});
+          card.appendChild(el('span', {class:'reel-badge'}, [textNode(t('reel-label') + ' ' + item.order)]));
+          var pair = el('div', {class:'pair-fields'});
+          var row2 = el('div', {class:'field-row-2col'});
+          row2.appendChild(makeTextField(item, t('field-video-name'), t('reels-title-ph'), false, false, 'text'));
+          row2.appendChild(makeTextField(item, t('field-ref-link'), 'https://...', false, true, 'link'));
+          pair.appendChild(row2);
+          pair.appendChild(makeTextField(item, t('field-script-content'), t('reels-script-ph'), true, false, 'script'));
+          card.appendChild(pair);
+          body.appendChild(card);
+        });
+      } else if (cat === '實習心得') {
+        list.forEach(function(item){
+          if (item.title.indexOf('IG') !== -1) {
+            body.appendChild(makeTextField(item, t('ig-label'), 'https://www.instagram.com/p/...', false, true, 'link'));
+          } else {
+            body.appendChild(makeTextField(item, t('feedback-label'), t('feedback-ph'), true, false, 'text'));
+          }
+        });
+      }
+
+      block.appendChild(body);
+      app.appendChild(block);
+    });
+
+    updateOverall();
+  }
+
+  setStatus(t('loading'));
+  apiGet().then(function(data){
+    items = data.items || [];
+    setStatus('');
+    document.getElementById('app').style.display = '';
+    render();
+  }).catch(function(err){
+    console.error(err);
+    setStatus(t('load-error'), true);
+  });
+})();
+</script>
+
+</body>
+</html>
