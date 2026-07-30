@@ -7,10 +7,12 @@
   - 實習生 A：`SIGXE3`
   - 實習生 B：`IZT2SN`
 
+程式碼已經放在 GitHub：https://github.com/gill-sudo/intern-progress-tracker
+
 完成部署後，兩人的專屬連結會是：
 ```
-https://<你的GitHub帳號>.github.io/<repo名稱>/?user=SIGXE3
-https://<你的GitHub帳號>.github.io/<repo名稱>/?user=IZT2SN
+https://gill-sudo.github.io/intern-progress-tracker/?user=SIGXE3
+https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
 ```
 
 ---
@@ -40,7 +42,7 @@ https://<你的GitHub帳號>.github.io/<repo名稱>/?user=IZT2SN
    wrangler secret put NOTION_TOKEN
    ```
    貼上第一步拿到的 `secret_xxxxxxxxxxxx`，按 Enter。
-4. 打開 `wrangler.toml`，把 `ALLOWED_ORIGIN` 改成你等一下會用的 GitHub Pages 網址（例如 `https://yourname.github.io`），`NOTION_DATABASE_ID` 已經幫你填好了，不用動。
+4. `wrangler.toml` 裡的 `NOTION_DATABASE_ID` 和 `ALLOWED_ORIGIN`（已填 `https://gill-sudo.github.io`）都設定好了，這個檔案不用動。
 5. 部署：
    ```bash
    wrangler deploy
@@ -53,39 +55,40 @@ https://<你的GitHub帳號>.github.io/<repo名稱>/?user=IZT2SN
 
 ## 第三步：把網址填進前端網頁
 
-打開 `site/index.html`，找到這一行（在 `<script>` 區塊最上面）：
+打開 `docs/index.html`，找到這一行（在 `<script>` 區塊最上面）：
 ```js
 var API_BASE = "https://intern-progress-proxy.YOUR_SUBDOMAIN.workers.dev";
 ```
 把它換成你上一步拿到的實際 Worker 網址，存檔。
 
-## 第四步：建立 GitHub Repo 並開啟 GitHub Pages
+## 第四步：開啟 GitHub Pages
 
-1. 在 GitHub 建立一個新的 repository（public 或 private 皆可，若用免費帳號的 private repo 要確認方案有支援 Pages）
-2. 把 `site/` 資料夾裡的內容（`index.html`）推上去，放在 repo 根目錄，或是放進一個資料夾也可以，例如：
+Repo 已經建好並推上去了（https://github.com/gill-sudo/intern-progress-tracker），目前是 **private**。
+
+1. GitHub Pages 在免費方案不支援 private repo，所以要先轉成 public：
    ```bash
-   git init
-   git add index.html
-   git commit -m "intern progress tracker"
-   git branch -M main
-   git remote add origin https://github.com/<你的帳號>/<repo名稱>.git
-   git push -u origin main
+   gh repo edit gill-sudo/intern-progress-tracker \
+     --visibility public --accept-visibility-change-consequences
    ```
-3. 到 repo 的 Settings → Pages，Source 選 `main` 分支、根目錄，儲存
-4. 等 1-2 分鐘，GitHub 會給你一個網址：`https://<你的帳號>.github.io/<repo名稱>/`
+   轉 public 後，Notion 資料庫 ID 會變成公開可見。這不是密鑰，沒有 Notion token 讀不到任何資料，但要知道有這件事。
+2. 到 repo 的 Settings → Pages，Source 選 `main` 分支、目錄選 `/docs`，儲存
+3. 等 1-2 分鐘，網址會是：`https://gill-sudo.github.io/intern-progress-tracker/`
 
-## 第五步：回頭修正 CORS 網址
+## 第五步：把改好的 index.html 推上去
 
-前面第二步的 `ALLOWED_ORIGIN` 如果當時填的是猜測值，現在請用實際拿到的 GitHub Pages 網址覆蓋，然後重新部署一次：
+第三步改完 `API_BASE` 之後：
 ```bash
-wrangler deploy
+git add docs/index.html
+git commit -m "set worker url"
+git push
 ```
+等 1-2 分鐘 GitHub Pages 會自動更新。
 
 ## 第六步：把專屬連結交給兩位實習生
 
 ```
-實習生 A：https://<你的帳號>.github.io/<repo名稱>/?user=SIGXE3
-實習生 B：https://<你的帳號>.github.io/<repo名稱>/?user=IZT2SN
+實習生 A：https://gill-sudo.github.io/intern-progress-tracker/?user=SIGXE3
+實習生 B：https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
 ```
 
 你（主管）自己也可以打開這兩個連結，隨時查看進度；或直接打開 Notion 資料庫，用「使用者」欄位篩選查看，效果一樣，而且可以看到最原始的資料。
@@ -100,6 +103,6 @@ wrangler deploy
 
 ## 常見問題排查
 
-- **網頁一直顯示「無法連線到後端」**：檢查 `site/index.html` 裡的 `API_BASE` 網址有沒有貼對；用瀏覽器直接打開 `你的Worker網址/items?user=SIGXE3` 看看有沒有回傳 JSON。
+- **網頁一直顯示「無法連線到後端」**：檢查 `docs/index.html` 裡的 `API_BASE` 網址有沒有貼對；用瀏覽器直接打開 `你的Worker網址/items?user=SIGXE3` 看看有沒有回傳 JSON。
 - **瀏覽器 Console 出現 CORS 錯誤**：`wrangler.toml` 的 `ALLOWED_ORIGIN` 要跟 GitHub Pages 網址完全一致（含 `https://`，不含結尾斜線），改完要重新 `wrangler deploy`。
 - **Worker 回傳「Notion API error」**：通常是忘記在 Notion 資料庫的「Connections」把 integration 加進去（第一步的第 4 點）。
