@@ -80,6 +80,10 @@
   .field-row-2col .field-item{flex:1;margin-bottom:0;}
   .status-banner{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;font-size:13.5px;color:var(--muted);}
   .status-banner.error{border-color:#f3b9b0;background:#fff6f5;color:#b3493a;}
+  .retry-btn{margin-left:12px;border:1px solid currentColor;background:transparent;color:inherit;font-family:inherit;font-size:12.5px;font-weight:700;padding:4px 14px;border-radius:999px;cursor:pointer;}
+  .retry-btn:hover{background:rgba(179,73,58,.08);}
+  .field-item.save-error .field-input,.field-item.save-error .field-textarea{border-color:var(--coral);background:#fff6f5;}
+  .task-item.save-error,.standalone-check.save-error{background:#fff6f5;border-radius:8px;}
   .user-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 14px;font-size:12.5px;margin-top:18px;}
   .user-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);}
   .saving-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-left:6px;opacity:0;transition:opacity .15s;}
@@ -146,6 +150,9 @@
       "no-user":"這個連結缺少使用者代碼。請使用主管提供、包含 ?user=你的代碼 的專屬連結。",
       "load-error":"無法連線到後端，請確認網路連線，或稍後再試一次。",
       "loading":"載入中...",
+      "save-error":"有 {n} 個欄位還沒存進 Notion（下方紅框處）。請確認網路連線後按重試，在成功之前請先不要關閉這個頁面。",
+      "retry":"重試",
+      "unsaved":"還有資料正在儲存，現在離開可能會遺失。",
       "cat-事前準備":"事前準備","cat-網站流程測試":"網站流程測試","cat-常見問題收集":"收集僑外生在台常見問題",
       "cat-求職問卷規劃":"僑外生求職問卷規劃","cat-社群整理":"僑外生常用社團／社群整理",
       "cat-Reels腳本規劃":"Reels 拍攝腳本規劃","cat-實習心得":"實習心得回饋",
@@ -180,6 +187,9 @@
       "no-user":"This link is missing a user code. Please use the personal link your manager gave you (it contains ?user=yourcode).",
       "load-error":"Couldn't connect to the backend. Check your connection or try again shortly.",
       "loading":"Loading...",
+      "save-error":"{n} field(s) haven't reached Notion yet (highlighted in red below). Check your connection and press retry — please don't close this page until it succeeds.",
+      "retry":"Retry",
+      "unsaved":"Some changes are still saving. Leaving now may lose them.",
       "cat-事前準備":"Pre-Departure Preparation","cat-網站流程測試":"Website Flow Testing","cat-常見問題收集":"Common Job-Search Questions",
       "cat-求職問卷規劃":"Job-Hunting Survey Planning","cat-社群整理":"Community Roundup",
       "cat-Reels腳本規劃":"Reels Script Planning","cat-實習心得":"Internship Reflection Feedback",
@@ -214,6 +224,9 @@
       "no-user":"Đường link này thiếu mã người dùng. Vui lòng dùng đường link cá nhân mà quản lý cung cấp (có chứa ?user=mã của bạn).",
       "load-error":"Không thể kết nối với máy chủ. Vui lòng kiểm tra kết nối mạng hoặc thử lại sau.",
       "loading":"Đang tải...",
+      "save-error":"Có {n} mục chưa được lưu vào Notion (được đánh dấu đỏ bên dưới). Vui lòng kiểm tra kết nối mạng rồi bấm thử lại — đừng đóng trang này cho đến khi thành công.",
+      "retry":"Thử lại",
+      "unsaved":"Một số thay đổi vẫn đang được lưu. Rời khỏi trang lúc này có thể làm mất dữ liệu.",
       "cat-事前準備":"Chuẩn Bị Trước Khi Bắt Đầu","cat-網站流程測試":"Kiểm Tra Luồng Trải Nghiệm Website","cat-常見問題收集":"Câu Hỏi Thường Gặp",
       "cat-求職問卷規劃":"Lên Kế Hoạch Khảo Sát Tìm Việc","cat-社群整理":"Tổng Hợp Cộng Đồng",
       "cat-Reels腳本規劃":"Lên Kế Hoạch Kịch Bản Reels","cat-實習心得":"Phản Hồi Cảm Nghĩ Thực Tập",
@@ -247,7 +260,10 @@
   if (!I18N[currentLang]) currentLang = 'zh';
 
   var items = [];          // flat list from API
-  var saveTimers = {};      // debounce per-field timers
+  var saveTimers = {};      // key -> { timer, id, field, value, mark } pending debounce
+  var saveChains = {};      // key -> promise, serialises writes to one field
+  var failedSaves = {};     // key -> payload that never reached Notion
+  var inFlight = 0;
 
   function t(key){ return (I18N[currentLang] && I18N[currentLang][key] !== undefined) ? I18N[currentLang][key] : key; }
 
@@ -294,27 +310,124 @@
     });
   }
 
-  function apiUpdate(id, field, value){
-    showSaving(true);
+  function postUpdate(id, field, value){
     return fetch(API_BASE + '/items/' + encodeURIComponent(id), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ field: field, value: value })
     }).then(function(r){
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    }).finally(function(){
-      setTimeout(function(){ showSaving(false); }, 400);
+      if (r.ok) return r.json();
+      return r.json().catch(function(){ return {}; }).then(function(body){
+        throw new Error(body.error || ('HTTP ' + r.status));
+      });
     });
   }
 
-  function debouncedSave(id, field, value){
-    var key = id + ':' + field;
-    if (saveTimers[key]) clearTimeout(saveTimers[key]);
-    saveTimers[key] = setTimeout(function(){
-      apiUpdate(id, field, value).catch(function(e){ console.error(e); });
-    }, 600);
+  function withRetry(id, field, value, triesLeft){
+    return postUpdate(id, field, value).catch(function(err){
+      if (triesLeft <= 0) throw err;
+      return new Promise(function(resolve){ setTimeout(resolve, 1500 * (3 - triesLeft)); })
+        .then(function(){ return withRetry(id, field, value, triesLeft - 1); });
+    });
   }
+
+  function renderSaveBanner(){
+    var n = Object.keys(failedSaves).length;
+    if (!n) { setStatus(''); return; }
+    setStatus(t('save-error').replace('{n}', n)
+      + '<button type="button" class="retry-btn" id="retry-saves">' + t('retry') + '</button>', true);
+    var btn = document.getElementById('retry-saves');
+    if (btn) btn.addEventListener('click', retryFailedSaves);
+  }
+
+  // Writes to the same field are chained so a slow request can never land after
+  // a newer one and resurrect stale text.
+  function runSave(id, field, value, mark){
+    var key = id + ':' + field;
+    inFlight++;
+    showSaving(true);
+    var chain = (saveChains[key] || Promise.resolve()).catch(function(){}).then(function(){
+      return withRetry(id, field, value, 2);
+    }).then(function(){
+      delete failedSaves[key];
+      if (mark) mark(false);
+    }, function(err){
+      console.error('save failed', key, err);
+      failedSaves[key] = { id: id, field: field, value: value, mark: mark };
+      if (mark) mark(true);
+    }).then(function(){
+      inFlight = Math.max(0, inFlight - 1);
+      if (!inFlight) showSaving(false);
+      renderSaveBanner();
+    });
+    saveChains[key] = chain;
+    return chain;
+  }
+
+  function retryFailedSaves(){
+    Object.keys(failedSaves).forEach(function(key){
+      var f = failedSaves[key];
+      delete failedSaves[key];
+      runSave(f.id, f.field, f.value, f.mark);
+    });
+    renderSaveBanner();
+  }
+
+  function debouncedSave(id, field, value, mark){
+    var key = id + ':' + field;
+    if (saveTimers[key]) clearTimeout(saveTimers[key].timer);
+    var slot = { id: id, field: field, value: value, mark: mark };
+    slot.timer = setTimeout(function(){
+      delete saveTimers[key];
+      runSave(slot.id, slot.field, slot.value, slot.mark);
+    }, 600);
+    saveTimers[key] = slot;
+  }
+
+  function flushPendingSaves(){
+    Object.keys(saveTimers).forEach(function(key){
+      var slot = saveTimers[key];
+      clearTimeout(slot.timer);
+      delete saveTimers[key];
+      runSave(slot.id, slot.field, slot.value, slot.mark);
+    });
+  }
+
+  function hasUnsavedWork(){
+    return Object.keys(saveTimers).length > 0 || inFlight > 0 || Object.keys(failedSaves).length > 0;
+  }
+
+  function marker(node){
+    return function(bad){ node.classList.toggle('save-error', !!bad); };
+  }
+
+  // Typing then immediately switching tabs must not sit in the debounce window.
+  document.addEventListener('visibilitychange', function(){
+    if (document.visibilityState === 'hidden') flushPendingSaves();
+  });
+
+  // Last resort on close: sendBeacon survives teardown, but only as a "simple"
+  // request — text/plain avoids a CORS preflight the browser can no longer do.
+  window.addEventListener('pagehide', function(){
+    Object.keys(saveTimers).forEach(function(key){
+      var slot = saveTimers[key];
+      clearTimeout(slot.timer);
+      delete saveTimers[key];
+      try {
+        navigator.sendBeacon(
+          API_BASE + '/items/' + encodeURIComponent(slot.id),
+          new Blob([JSON.stringify({ field: slot.field, value: slot.value })], { type: 'text/plain' })
+        );
+      } catch (e) { console.error(e); }
+    });
+  });
+
+  window.addEventListener('beforeunload', function(e){
+    if (!hasUnsavedWork()) return;
+    e.preventDefault();
+    e.returnValue = t('unsaved');
+    return e.returnValue;
+  });
 
   // ---- completion units per item (for progress bars) ----
   function unitsFor(item){
@@ -396,7 +509,7 @@
     cb.addEventListener('change', function(){
       item.done = cb.checked;
       li.classList.toggle('checked', cb.checked);
-      apiUpdate(item.id, 'done', cb.checked).catch(function(e){ console.error(e); });
+      runSave(item.id, 'done', cb.checked, marker(li));
       refreshTopicBadge(item.category);
       updateOverall();
     });
@@ -412,12 +525,22 @@
     var input = isTextarea ? el('textarea', {class:'field-textarea', rows:'4', placeholder: placeholder || ''})
                             : el('input', {type: isUrl ? 'url' : 'text', class:'field-input', placeholder: placeholder || ''});
     input.value = item[valueField] || '';
+    var mark = marker(wrap);
     input.addEventListener('input', function(){
       item[valueField] = input.value;
       wrap.classList.toggle('filled', !!input.value.trim());
-      debouncedSave(item.id, valueField, input.value);
+      debouncedSave(item.id, valueField, input.value, mark);
       refreshTopicBadge(item.category);
       updateOverall();
+    });
+    // Clicking away should commit straight away rather than wait out the debounce.
+    input.addEventListener('blur', function(){
+      var slot = saveTimers[item.id + ':' + valueField];
+      if (slot) {
+        clearTimeout(slot.timer);
+        delete saveTimers[item.id + ':' + valueField];
+        runSave(slot.id, slot.field, slot.value, slot.mark);
+      }
     });
     wrap.appendChild(input);
     return wrap;
@@ -461,7 +584,7 @@
         cb.addEventListener('change', function(){
           item.done = cb.checked;
           check.querySelector('.check-label').classList.toggle('active', cb.checked);
-          apiUpdate(item.id, 'done', cb.checked).catch(function(e){ console.error(e); });
+          runSave(item.id, 'done', cb.checked, marker(check));
           updateOverall();
         });
         check.appendChild(cb);
@@ -523,16 +646,23 @@
     updateOverall();
   }
 
-  setStatus(t('loading'));
-  apiGet().then(function(data){
-    items = data.items || [];
-    setStatus('');
-    document.getElementById('app').style.display = '';
-    render();
-  }).catch(function(err){
-    console.error(err);
-    setStatus(t('load-error'), true);
-  });
+  function load(){
+    setStatus(t('loading'));
+    apiGet().then(function(data){
+      items = data.items || [];
+      setStatus('');
+      document.getElementById('app').style.display = '';
+      render();
+    }).catch(function(err){
+      console.error(err);
+      setStatus(t('load-error')
+        + '<button type="button" class="retry-btn" id="retry-load">' + t('retry') + '</button>', true);
+      var btn = document.getElementById('retry-load');
+      if (btn) btn.addEventListener('click', load);
+    });
+  }
+
+  load();
 })();
 </script>
 

@@ -53,6 +53,19 @@ function plainText(richTextArr) {
   return richTextArr.map((t) => t.plain_text || "").join("");
 }
 
+// Notion rejects any single rich text object longer than 2000 characters, so
+// long answers (reflections, Reels scripts) are split across several objects.
+const RICH_TEXT_LIMIT = 2000;
+
+function toRichText(value) {
+  const s = value == null ? "" : String(value);
+  const parts = [];
+  for (let i = 0; i < s.length; i += RICH_TEXT_LIMIT) {
+    parts.push({ text: { content: s.slice(i, i + RICH_TEXT_LIMIT) } });
+  }
+  return parts;
+}
+
 function pageToItem(page) {
   const p = page.properties || {};
   return {
@@ -110,13 +123,13 @@ async function updateItem(env, pageId, field, value) {
       properties = { [PROP.done]: { checkbox: !!value } };
       break;
     case "text":
-      properties = { [PROP.text]: { rich_text: value ? [{ text: { content: String(value) } }] : [] } };
+      properties = { [PROP.text]: { rich_text: toRichText(value) } };
       break;
     case "link":
       properties = { [PROP.link]: { url: value ? String(value) : null } };
       break;
     case "script":
-      properties = { [PROP.script]: { rich_text: value ? [{ text: { content: String(value) } }] : [] } };
+      properties = { [PROP.script]: { rich_text: toRichText(value) } };
       break;
     default:
       throw new Error("Unknown field: " + field);
