@@ -1,5 +1,21 @@
 # 部署指南｜僑外生工讀生實習進度追蹤
 
+> **狀態：已完成部署並驗證通過（2026-07-31）**
+>
+> 實習生連結（可直接發出去）：
+> - 實習生 A：https://gill-sudo.github.io/intern-progress-tracker/?user=SIGXE3
+> - 實習生 B：https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
+>
+> 各元件現況：
+> | 元件 | 位置 |
+> |---|---|
+> | 網頁 | GitHub Pages，`main` 分支 `/docs` 目錄 |
+> | 後端代理 | https://intern-progress-proxy.gill-610.workers.dev （Cloudflare 帳號 gill@wport.me） |
+> | 資料庫 | https://app.notion.com/p/e2e1d3775d2041d586d2d6b8864cf73a （Notion 工作區「gill的空間」） |
+> | Notion 密鑰 | 存於 Cloudflare Secrets（`NOTION_TOKEN`），不在此 repo 內 |
+>
+> 以下步驟為當初的部署記錄，**平時不需要再執行**；只有在要重建環境、換帳號或排查問題時才需要參考。
+
 架構：**GitHub Pages（前端網頁）→ Cloudflare Worker（安全代理）→ Notion（資料庫）**
 
 - 資料庫已經建好（Notion 工作區「gill的空間」，帳號 gill@wport.me）：https://app.notion.com/p/e2e1d3775d2041d586d2d6b8864cf73a
