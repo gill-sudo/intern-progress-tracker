@@ -6,5 +6,5 @@ compatibility_date = "2024-01-01"
 # The NOTION_TOKEN must NOT go here — set it with `wrangler secret put NOTION_TOKEN`
 # so it's encrypted and never committed to git.
 [vars]
-NOTION_DATABASE_ID = "e34513ac1e744e6198c158b66b588153"
+NOTION_DATABASE_ID = "e2e1d3775d2041d586d2d6b8864cf73a"
 ALLOWED_ORIGIN = "https://gill-sudo.github.io"

@@ -2,7 +2,7 @@
 
 架構：**GitHub Pages（前端網頁）→ Cloudflare Worker（安全代理）→ Notion（資料庫）**
 
-- 資料庫已經建好：https://app.notion.com/p/e34513ac1e744e6198c158b66b588153
+- 資料庫已經建好（Notion 工作區「gill的空間」，帳號 gill@wport.me）：https://app.notion.com/p/e2e1d3775d2041d586d2d6b8864cf73a
 - 兩位實習生目前的代碼（尚未知道真實姓名前的暫用代碼，之後可以自己在 Notion 改）：
   - 實習生 A：`SIGXE3`
   - 實習生 B：`IZT2SN`
@@ -19,8 +19,10 @@ https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
 
 ## 第一步：建立 Notion 整合（Integration），取得 API 金鑰
 
+**務必用 gill@wport.me 登入 Notion 再做這一步。** integration 綁在工作區層級，用別的帳號建的無法存取「gill的空間」裡的資料庫。
+
 1. 前往 https://www.notion.so/my-integrations
-2. 點「+ New integration」，隨便取名（例如 `intern-tracker`），關聯到你的 workspace
+2. 點「+ New integration」，隨便取名（例如 `intern-tracker`），關聯到的 workspace 選「gill的空間」
 3. 建立後，複製「Internal Integration Secret」，格式類似 `secret_xxxxxxxxxxxx`（這組是敏感資訊，不要放進程式碼或公開分享）
 4. 打開「實習進度資料庫」（連結見上方），點右上角「⋯」→「Connections」（連結）→ 把剛剛建立的 integration 加進去。**這一步很重要，沒加的話 API 會抓不到資料。**
 
