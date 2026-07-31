@@ -3,8 +3,8 @@
 > **狀態：已完成部署並驗證通過（2026-07-31）**
 >
 > 實習生連結（可直接發出去）：
-> - 實習生 A：https://gill-sudo.github.io/intern-progress-tracker/?user=SIGXE3
-> - 實習生 B：https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
+> - 1150803_NGUYEN PHUOC VINH：https://gill-sudo.github.io/intern-progress-tracker/?user=1150803_NGUYEN%20PHUOC%20VINH
+> - 1150803_HOANG PHUONG LUYEN：https://gill-sudo.github.io/intern-progress-tracker/?user=1150803_HOANG%20PHUONG%20LUYEN
 >
 > 各元件現況：
 > | 元件 | 位置 |
@@ -19,16 +19,18 @@
 架構：**GitHub Pages（前端網頁）→ Cloudflare Worker（安全代理）→ Notion（資料庫）**
 
 - 資料庫已經建好（Notion 工作區「gill的空間」，帳號 gill@wport.me）：https://app.notion.com/p/e2e1d3775d2041d586d2d6b8864cf73a
-- 兩位實習生目前的代碼（尚未知道真實姓名前的暫用代碼，之後可以自己在 Notion 改）：
-  - 實習生 A：`SIGXE3`
-  - 實習生 B：`IZT2SN`
+- 兩位實習生的代碼（入職日期＋英文姓名，對應 Notion「使用者」欄位的選項名稱）：
+  - `1150803_NGUYEN PHUOC VINH`
+  - `1150803_HOANG PHUONG LUYEN`
+
+  代碼含空格，放進網址時空格要寫成 `%20`，否則貼到 LINE、Email 可能會在空格處被截斷。
 
 程式碼已經放在 GitHub：https://github.com/gill-sudo/intern-progress-tracker
 
 完成部署後，兩人的專屬連結會是：
 ```
-https://gill-sudo.github.io/intern-progress-tracker/?user=SIGXE3
-https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
+https://gill-sudo.github.io/intern-progress-tracker/?user=1150803_NGUYEN%20PHUOC%20VINH
+https://gill-sudo.github.io/intern-progress-tracker/?user=1150803_HOANG%20PHUONG%20LUYEN
 ```
 
 ---
@@ -105,8 +107,8 @@ git push
 ## 第六步：把專屬連結交給兩位實習生
 
 ```
-實習生 A：https://gill-sudo.github.io/intern-progress-tracker/?user=SIGXE3
-實習生 B：https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
+1150803_NGUYEN PHUOC VINH：https://gill-sudo.github.io/intern-progress-tracker/?user=1150803_NGUYEN%20PHUOC%20VINH
+1150803_HOANG PHUONG LUYEN：https://gill-sudo.github.io/intern-progress-tracker/?user=1150803_HOANG%20PHUONG%20LUYEN
 ```
 
 你（主管）自己也可以打開這兩個連結，隨時查看進度；或直接打開 Notion 資料庫，用「使用者」欄位篩選查看，效果一樣，而且可以看到最原始的資料。
@@ -115,12 +117,12 @@ git push
 
 ## 之後怎麼調整內容？
 
-- **改實習生的顯示代碼／姓名**：去 Notion 資料庫，把「使用者」欄位的選項名稱從 `SIGXE3` 改成他們的真實英文名字即可；記得同時更新他們拿到的連結網址（`?user=` 後面也要換成一樣的名字）。
+- **改實習生的顯示代碼／姓名**：去 Notion 資料庫，改「使用者」欄位的選項名稱時要小心：透過 API 替換選項會把所有列的使用者值清空，改完必須逐列重新指定。在 Notion 介面裡直接重新命名選項則不會有這個問題，建議用介面改，並記得同步更新 `?user=` 後面的網址（空格寫成 `%20`）。
 - **新增常見問題／新增一支 Reel**：直接在 Notion 資料庫裡新增一列，「使用者」填對應的人、「分類」填 `常見問題收集` 或 `Reels腳本規劃`、「順序」填下一個數字即可，網頁會自動抓到新項目，不需要改程式碼。
 - **新增第三位實習生**：在 Notion「使用者」欄位新增一個新選項（例如一組新代碼），複製 27 列範本資料（分類/順序都比照現有兩人），再給他一個新的 `?user=新代碼` 連結。
 
 ## 常見問題排查
 
-- **網頁一直顯示「無法連線到後端」**：檢查 `docs/index.html` 裡的 `API_BASE` 網址有沒有貼對；用瀏覽器直接打開 `你的Worker網址/items?user=SIGXE3` 看看有沒有回傳 JSON。
+- **網頁一直顯示「無法連線到後端」**：檢查 `docs/index.html` 裡的 `API_BASE` 網址有沒有貼對；用瀏覽器直接打開 `你的Worker網址/items?user=1150803_NGUYEN%20PHUOC%20VINH` 看看有沒有回傳 JSON。
 - **瀏覽器 Console 出現 CORS 錯誤**：`wrangler.toml` 的 `ALLOWED_ORIGIN` 要跟 GitHub Pages 網址完全一致（含 `https://`，不含結尾斜線），改完要重新 `wrangler deploy`。
 - **Worker 回傳「Notion API error」**：通常是忘記在 Notion 資料庫的「Connections」把 integration 加進去（第一步的第 4 點）。
