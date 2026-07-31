@@ -51,7 +51,7 @@ https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
    ```
    完成後終端機會顯示一個網址，長得像：
    ```
-   https://intern-progress-proxy.yourname.workers.dev
+   https://intern-progress-proxy.gill-610.workers.dev
    ```
    **記下這個網址**，下一步要用。
 
@@ -59,7 +59,7 @@ https://gill-sudo.github.io/intern-progress-tracker/?user=IZT2SN
 
 打開 `docs/index.html`，找到這一行（在 `<script>` 區塊最上面）：
 ```js
-var API_BASE = "https://intern-progress-proxy.YOUR_SUBDOMAIN.workers.dev";
+var API_BASE = "https://intern-progress-proxy.gill-610.workers.dev";
 ```
 把它換成你上一步拿到的實際 Worker 網址，存檔。
 
